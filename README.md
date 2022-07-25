@@ -1,70 +1,16 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# 2048
+A 2048 game
+# Cahier des charges 2048:
+# Règles du jeu :
+Pour jouer à 2048, vous devez utiliser les flèches du clavier pour obtenir la fusion de deux tuiles ayant le même nombre. Par exemple, lorsque deux tuiles ayant le chiffre 2 se touchent, la tuile avec le chiffre 4 apparaît. L'objectif est donc de parvenir à la tuile de 2048 en prenant garde à vos mouvements.
+# Fonctionnalités de l'App:
+- Le jeu sera dirigée via les flèches du clavier
+- La partie commence avec 2 nombres (soit 2, soit 4) situé aléatoirement sur la grille de 4x4, si des chiffres identiques entrent en collision, ils s'additionnent. le but étant d'obtenir le nombre 2048 en déplaçant les nombres dans la grille. Si la grille est pleine, c'est game over étant donné qu'on ne peut plus déplacere les nombres.
+- Le score est la somme totale de tout les nombres présents sur la grille.
+- Un bouton sera utilisé pour réinitialiser la grille et redémarrer la partie, le score record restera affiché sur l'écran
+- Pouvoir continuer après 2048 si on gagne la partie.
+-Les cases changent de couleur en fonction des nombres affichés
+# "Définiton Of Done":
+- Au minimum, il doit y avoir une grille fonctionnelle dans laquelle on pourra déplacer et additionner des nombres jusqu'a obtenir le chiffre 2048, 
+- Mettre un score record qui sera sauvegardé à chaque partie
+- Pouvoir continuer après 2048
