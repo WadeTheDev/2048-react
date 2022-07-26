@@ -133,7 +133,7 @@ class App extends React.Component {
       })
     }
 
-    Right = async () =>{
+    right = async () =>{
       let wait = await this.compressGridRight()
       let wait1 = await this.mergeSameNumbersRow()
       wait = await this.compressGridRight()
@@ -141,10 +141,58 @@ class App extends React.Component {
       console.log(wait, wait1);
     }
 
-    // Up
+    // up
+    // rotate left the current grid and push left that will give the up and rotate right again
 
-  
-    // dushen le bg
+    rotateLeft = () =>{
+      const gridVide = [
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
+      ]
+
+      this.state.grid.map((row, i) => {
+        row.map((item, j) => {
+          gridVide[i][j] = this.state.grid[j][this.state.grid[i].length - 1 - i]
+        })
+      })
+
+      this.setState({
+        grid: gridVide
+      })
+    }
+
+
+    rotateRight = () => {
+      const gridVide = [
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
+      ]
+
+      this.state.grid.map((row, i) => {
+        row.map((item, j) => {
+          gridVide[i][j] = this.state.grid[this.state.grid[i].length - 1 - j][i]
+        })
+      })
+
+      this.setState({
+        grid: gridVide
+      })
+    }
+
+ 
+    up = async () =>{
+      let wait = await this.rotateLeft()
+      let wait1 = await this.left()
+      let wait2 = await this.rotateRight()
+      console.log(wait, wait1, wait2);
+    }
+
+    // up done
+    // dushen le Giga-bg
 
     addNumberRandom = () =>{
       let array = [2,4]
@@ -160,13 +208,23 @@ class App extends React.Component {
       }
     }
 
+    // Down
+
+    down = async () =>{
+      let wait = await this.rotateLeft()
+      let wait1 = await this.right()
+      let wait2 = await this.rotateRight()
+      console.log(wait, wait1, wait2);
+    }
+
     render(){
     return (
       <>
         <section>
           <button onClick={this.left}>Left</button>
-          <button onClick={this.Right}>Right</button>
-          <button onClick={this.Up}>Up</button>
+          <button onClick={this.right}>right</button>
+          <button onClick={this.up}>up</button>
+          <button onClick={this.down}>Down</button>
           <button onClick={this.start}>start</button>
           <Grid grid={this.state.grid}/>
         </section>
