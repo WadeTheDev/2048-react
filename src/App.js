@@ -12,10 +12,10 @@ class App extends React.Component {
       gameOver : false,
       message : '',
       grid: [
+        ["1024","","","1024"],
         ["","","",""],
-        ["","","",""],
-        ["","","",""],
-        ["","","",""]
+        ["","4","4","8"],
+        ["","2","",""]
       ],
     }
   }
@@ -55,7 +55,6 @@ class App extends React.Component {
       console.log(waitReset)
     }
 
-    // dushen
 
     compressGrid = () => {
       const gridVide = [
@@ -99,21 +98,21 @@ class App extends React.Component {
       })
     }
 
-
-    // dushen
-
-    left = () => {
-      this.state.grid.forEach((row) => {
-
-      })
+    left = async () =>{
+      let wait = await this.compressGrid()
+      let wait1 = await this.mergeSameNumbers()
+      wait = await this.compressGrid()
+      wait1 = await this.mergeSameNumbers()
+      console.log(wait, wait1);
     }
+
+    // dushen le bg
 
     render(){
     return (
       <>
         <section>
-          <button onClick={this.compressGrid}>compress</button>
-          <button onClick={this.mergeSameNumbers}>merge</button>
+          <button onClick={this.left}>Left</button>
           <button onClick={this.start}>start</button>
           <Grid grid={this.state.grid}/>
         </section>
