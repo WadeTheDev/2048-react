@@ -12,7 +12,7 @@ class App extends React.Component {
       gameOver : false,
       message : '',
       grid: [
-        ["","","",""],
+        ["","1024","","1024"],
         ["","","",""],
         ["","","",""],
         ["","","",""]
@@ -101,19 +101,12 @@ class App extends React.Component {
 
 
     // dushen
-
-    left = () => {
-      this.state.grid.forEach((row) => {
-
-      })
-    }
-
+    
     render(){
     return (
       <>
         <section>
-          <button onClick={this.compressGrid}>compress</button>
-          <button onClick={this.mergeSameNumbers}>merge</button>
+          <button onClick={this.left}>Left</button>
           <button onClick={this.start}>start</button>
           <Grid grid={this.state.grid}/>
         </section>
