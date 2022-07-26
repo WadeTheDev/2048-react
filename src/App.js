@@ -55,6 +55,7 @@ class App extends React.Component {
       console.log(waitReset)
     }
 
+    // left
 
     compressGridLeft = () => {
       const gridVide = [
@@ -80,7 +81,7 @@ class App extends React.Component {
       })
     }
 
-    mergeSameNumbersLeft = () => {
+    mergeSameNumbersRow = () => {
       const gridClone = [...this.state.grid]
 
       gridClone.map((row, i) => {
@@ -100,12 +101,48 @@ class App extends React.Component {
 
     left = async () =>{
       let wait = await this.compressGridLeft()
-      let wait1 = await this.mergeSameNumbersLeft()
+      let wait1 = await this.mergeSameNumbersRow()
       wait = await this.compressGridLeft()
       this.addNumberRandom()
       console.log(wait, wait1);
     }
 
+    // right
+
+    compressGridRight = () => {
+      const gridVide = [
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
+      ]
+
+      this.state.grid.map((row, i) => {
+        let colNum = 3
+
+        row.map((item, j) => {
+          if(this.state.grid[i][j] !== ""){
+            gridVide[i][colNum] = this.state.grid[i][j];
+            colNum--
+          }
+        })
+      })
+
+      this.setState({
+        grid : gridVide
+      })
+    }
+
+    
+
+    Right = async () =>{
+      let wait = await this.compressGridRight()
+      let wait1 = await this.mergeSameNumbersRow()
+      wait = await this.compressGridRight()
+      this.addNumberRandom()
+      console.log(wait, wait1);
+    }
+  
     // dushen le bg
 
     addNumberRandom = () =>{
@@ -127,6 +164,7 @@ class App extends React.Component {
       <>
         <section>
           <button onClick={this.left}>Left</button>
+          <button onClick={this.Right}>Right</button>
           <button onClick={this.start}>start</button>
           <Grid grid={this.state.grid}/>
         </section>
