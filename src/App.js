@@ -143,55 +143,6 @@ class App extends React.Component {
 
     // Up
 
-    compressGridUp = () => {
-      const gridVide = [
-        ["","","",""],
-        ["","","",""],
-        ["","","",""],
-        ["","","",""]
-      ]
-
-      this.state.grid.map((row, i) => {
-        let rowNum = 0
-
-        row.map((item, j) => {
-          if(this.state.grid[i][j] !== ""){
-            gridVide[rowNum][j] = this.state.grid[i][j];
-            rowNum++
-          }
-        })
-      })
-
-      this.setState({
-        grid : gridVide
-      })
-    }
-
-    mergeSameNumbersColumn = () => {
-      const gridClone = [...this.state.grid]
-
-      gridClone.map((row, i) => {
-        row.slice(0, row.length-1).map((item, j) => {
-          if(gridClone[i][j] !== "" &&
-          gridClone[i][j] === gridClone[i+1][j]){
-            gridClone[i][j] = gridClone[i][j]*2
-            gridClone[i+1][j] = ""
-          }
-        })
-      })
-
-      this.setState({
-        grid: gridClone
-      })
-    }
-
-    Up = async () =>{
-      let wait = await this.compressGridUp()
-      let wait1 = await this.mergeSameNumbersColumn()
-      wait = await this.compressGridUp()
-      this.addNumberRandom()
-      console.log(wait, wait1);
-    }
   
     // dushen le bg
 
