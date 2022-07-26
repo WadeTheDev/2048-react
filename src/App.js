@@ -55,9 +55,9 @@ class App extends React.Component {
       console.log(waitReset)
     }
 
-    // dushen
+    // left
 
-    compressGrid = () => {
+    compressGridLeft = () => {
       const gridVide = [
         ["","","",""],
         ["","","",""],
@@ -81,7 +81,7 @@ class App extends React.Component {
       })
     }
 
-    mergeSameNumbers = () => {
+    mergeSameNumbersRow = () => {
       const gridClone = [...this.state.grid]
 
       gridClone.map((row, i) => {
@@ -99,14 +99,72 @@ class App extends React.Component {
       })
     }
 
+    left = async () =>{
+      let wait = await this.compressGridLeft()
+      let wait1 = await this.mergeSameNumbersRow()
+      wait = await this.compressGridLeft()
+      this.addNumberRandom()
+      console.log(wait, wait1);
+    }
 
-    // dushen
+    // right
+
+    compressGridRight = () => {
+      const gridVide = [
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
+      ]
+
+      this.state.grid.map((row, i) => {
+        let colNum = 3
+
+        row.map((item, j) => {
+          if(this.state.grid[i][j] !== ""){
+            gridVide[i][colNum] = this.state.grid[i][j];
+            colNum--
+          }
+        })
+      })
+
+      this.setState({
+        grid : gridVide
+      })
+    }
+
     
+
+    Right = async () =>{
+      let wait = await this.compressGridRight()
+      let wait1 = await this.mergeSameNumbersRow()
+      wait = await this.compressGridRight()
+      this.addNumberRandom()
+      console.log(wait, wait1);
+    }
+  
+    // dushen le bg
+
+    addNumberRandom = () =>{
+      let array = [2,4]
+      let random = Math.floor(Math.random()* 2)
+      let randomRow = Math.floor(Math.random()* 4)
+      let randomColumn = Math.floor(Math.random()* 4)
+      let gridClone = [...this.state.grid]
+      if (gridClone[randomRow][randomColumn] === "") {
+      gridClone[randomRow][randomColumn] =  array[random]
+      this.setState({grid: gridClone})
+      }else{
+        this.addNumberRandom()
+      }
+    }
+
     render(){
     return (
       <>
         <section>
           <button onClick={this.left}>Left</button>
+          <button onClick={this.Right}>Right</button>
           <button onClick={this.start}>start</button>
           <Grid grid={this.state.grid}/>
         </section>
