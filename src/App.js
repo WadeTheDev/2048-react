@@ -12,10 +12,10 @@ class App extends React.Component {
       gameOver : false,
       message : '',
       grid: [
-        ["1024","","","1024"],
         ["","","",""],
-        ["","4","4","8"],
-        ["","2","",""]
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
       ],
     }
   }
@@ -56,7 +56,7 @@ class App extends React.Component {
     }
 
 
-    compressGrid = () => {
+    compressGridLeft = () => {
       const gridVide = [
         ["","","",""],
         ["","","",""],
@@ -80,7 +80,7 @@ class App extends React.Component {
       })
     }
 
-    mergeSameNumbers = () => {
+    mergeSameNumbersLeft = () => {
       const gridClone = [...this.state.grid]
 
       gridClone.map((row, i) => {
@@ -99,14 +99,28 @@ class App extends React.Component {
     }
 
     left = async () =>{
-      let wait = await this.compressGrid()
-      let wait1 = await this.mergeSameNumbers()
-      wait = await this.compressGrid()
-      wait1 = await this.mergeSameNumbers()
+      let wait = await this.compressGridLeft()
+      let wait1 = await this.mergeSameNumbersLeft()
+      wait = await this.compressGridLeft()
+      this.addNumberRandom()
       console.log(wait, wait1);
     }
 
     // dushen le bg
+
+    addNumberRandom = () =>{
+      let array = [2,4]
+      let random = Math.floor(Math.random()* 2)
+      let randomRow = Math.floor(Math.random()* 4)
+      let randomColumn = Math.floor(Math.random()* 4)
+      let gridClone = [...this.state.grid]
+      if (gridClone[randomRow][randomColumn] === "") {
+      gridClone[randomRow][randomColumn] =  array[random]
+      this.setState({grid: gridClone})
+      }else{
+        this.addNumberRandom()
+      }
+    }
 
     render(){
     return (
