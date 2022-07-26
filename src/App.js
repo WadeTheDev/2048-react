@@ -142,8 +142,9 @@ class App extends React.Component {
     }
 
     // Up
+    // rotate left the current grid and push left that will give the Up and rotate right again
 
-    compressGridUp = () => {
+    rotateLeft = () =>{
       const gridVide = [
         ["","","",""],
         ["","","",""],
@@ -152,47 +153,88 @@ class App extends React.Component {
       ]
 
       this.state.grid.map((row, i) => {
-        let rowNum = 0
-
         row.map((item, j) => {
-          if(this.state.grid[i][j] !== ""){
-            gridVide[rowNum][j] = this.state.grid[i][j];
-            rowNum++
-          }
+          gridVide[i][j] = this.state.grid[j][this.state.grid[i].length - 1 - i]
         })
       })
 
       this.setState({
-        grid : gridVide
+        grid: gridVide
       })
     }
 
-    mergeSameNumbersColumn = () => {
-      const gridClone = [...this.state.grid]
 
-      gridClone.map((row, i) => {
-        row.slice(0, row.length-1).map((item, j) => {
-          if(gridClone[i][j] !== "" &&
-          gridClone[i][j] === gridClone[i+1][j]){
-            gridClone[i][j] = gridClone[i][j]*2
-            gridClone[i+1][j] = ""
-          }
+    rotateRight = () => {
+      const gridVide = [
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
+      ]
+
+      this.state.grid.map((row, i) => {
+        row.map((item, j) => {
+          gridVide[i][j] = this.state.grid[this.state.grid[i].length - 1 - j][i]
         })
       })
 
       this.setState({
-        grid: gridClone
+        grid: gridVide
       })
     }
+
+    // compressGridUp = () => {
+    //   const gridVide = [
+    //     ["","","",""],
+    //     ["","","",""],
+    //     ["","","",""],
+    //     ["","","",""]
+    //   ]
+
+    //   this.state.grid.map((row, i) => {
+    //     let rowNum = 0
+
+    //     row.map((item, j) => {
+    //       if(this.state.grid[i][j] !== ""){
+    //         gridVide[rowNum][j] = this.state.grid[i][j];
+    //         rowNum++
+    //       }
+    //     })
+    //   })
+
+    //   this.setState({
+    //     grid : gridVide
+    //   })
+    // }
+
+    // mergeSameNumbersColumn = () => {
+    //   const gridClone = [...this.state.grid]
+
+    //   gridClone.map((row, i) => {
+    //     row.slice(0, row.length-1).map((item, j) => {
+    //       if(gridClone[i][j] !== "" &&
+    //       gridClone[i][j] === gridClone[i+1][j]){
+    //         gridClone[i][j] = gridClone[i][j]*2
+    //         gridClone[i+1][j] = ""
+    //       }
+    //     })
+    //   })
+
+    //   this.setState({
+    //     grid: gridClone
+    //   })
+    // }
 
     Up = async () =>{
-      let wait = await this.compressGridUp()
-      let wait1 = await this.mergeSameNumbersColumn()
-      wait = await this.compressGridUp()
+      let wait = await this.rotateLeft()
+      let wait1 = await this.left()
+      let wait2 = await this.rotateRight()
+      // wait = await this.rotateLeft()
       this.addNumberRandom()
-      console.log(wait, wait1);
+      console.log(wait, wait1, wait2);
     }
-  
+
+    // up done
     // dushen le bg
 
     addNumberRandom = () =>{
