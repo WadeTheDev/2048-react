@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './App.css';
 import Grid from "./components/Grid";
 
 let init = 0
+
+
 class App extends React.Component {
   constructor(){
     super()
@@ -18,6 +20,7 @@ class App extends React.Component {
         ["","","",""]
       ],
     }
+  
   }
 
   // Function reset grid
@@ -220,15 +223,35 @@ class App extends React.Component {
       }
     }
 
+   onKeyDown = (e) => {
+      switch (e.key) {
+        case 'ArrowLeft':
+          this.left()
+          break;
+        case 'ArrowRight':
+          this.right()
+          break;
+        case 'ArrowUp':
+          this.up()
+          break;
+        case 'ArrowDown':
+          this.down()
+          break;
+      
+        default:
+          break;
+      }
+      
+      console.log(e.key)
+
+  }
 
     render(){
+
+      
     return (
       <>
-        <section>
-          <button onClick={this.left}>Left</button>
-          <button onClick={this.right}>right</button>
-          <button onClick={this.up}>up</button>
-          <button onClick={this.down}>Down</button>
+        <section onKeyDown={this.onKeyDown}>
           <button onClick={this.start}>start</button>
           <Grid grid={this.state.grid}/>
         </section>
