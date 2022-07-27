@@ -250,11 +250,11 @@ class App extends React.Component {
         case 'ArrowDown':
           this.down()
           break;
-      
+
         default:
           break;
       }
-      
+
       console.log(e.key)
   }
 
@@ -284,10 +284,10 @@ class App extends React.Component {
       victory: true
     })
   }
-  
+
     render(){
 
-      
+
     return (
       <>
         {this.state.etat==='' && 
