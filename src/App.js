@@ -316,7 +316,7 @@ class App extends React.Component {
           <button onClick={this.continue}>Continuer</button>
         </section>}
          {this.state.etat==='Defaite' && <section>
-          <h2>T'es mauvais Jack</h2>
+          <h2>Tu sais pas jouer Jack, t'es mauvais</h2>
           <button onClick={this.start}>Fait mieux!</button>
           </section>}
       </>
