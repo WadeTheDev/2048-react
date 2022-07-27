@@ -43,7 +43,7 @@ class App extends React.Component {
 
   // Function create random space
   randomNumber = () => {
-    let array = [1024,1024]
+    let array = [2,4]
     let random = Math.floor(Math.random()* 2)
     let randomRow = Math.floor(Math.random()* 4)
     let randomColumn = Math.floor(Math.random()* 4)
@@ -97,7 +97,7 @@ class App extends React.Component {
 
     // Function merge same numbers and add the score
     mergeSameNumbersRow = () => {
-      const gridClone = [...this.state.grid]
+      const gridClone = [[...this.state.grid[0]], [...this.state.grid[1]],[...this.state.grid[2]],[...this.state.grid[3]]]
       const scoreState = this.state.score
 
       gridClone.map((row, i) => {
@@ -121,7 +121,7 @@ class App extends React.Component {
       gridClone.forEach((row,i)=>{
         row.forEach((element,j)=>{
           if (this.state.grid[i][j] !== element){
-            test=true
+            test = true
           }
         })
       })
@@ -150,6 +150,7 @@ class App extends React.Component {
     // Update
 
     componentDidUpdate(prevProps, prevState){
+      console.log(this.state)
       if (this.state.Move === "oui"){
         this.mergeSameNumbersRow()
       }
