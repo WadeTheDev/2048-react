@@ -1,33 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './App.css';
 import Grid from "./components/Grid";
 
 let init = 0
+
+
 class App extends React.Component {
   constructor(){
     super()
 
     this.state = {
       score : 0,
-      gameOver : false,
-      message : '',
       grid: [
         ["","","",""],
         ["","","",""],
         ["","","",""],
         ["","","",""]
       ],
+      etat: '',
+      victory: false
     }
+  
   }
 
   // Function reset grid
   reset = () => {
-    this.setState({grid: [
-      ["","","",""],
-      ["","","",""],
-      ["","","",""],
-      ["","","",""]
-    ]})
+    this.setState({score : 0,
+      grid: [
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
+      ],
+      etat: '',
+      victory: false
+  })
   }
 
   // Function create random space
@@ -113,7 +120,8 @@ class App extends React.Component {
       let wait1 = await this.mergeSameNumbersRow()
       wait = await this.compressGridLeft()
       this.addNumberRandom()
-      console.log(wait, wait1);
+      let wait3 = await this.victoire()
+      console.log(wait, wait1,wait3);
     }
 
     // Compress grid right
@@ -147,7 +155,8 @@ class App extends React.Component {
       let wait1 = await this.mergeSameNumbersRow()
       wait = await this.compressGridRight()
       this.addNumberRandom()
-      console.log(wait, wait1);
+      let wait3 = await this.victoire()
+      console.log(wait, wait1,wait3);
     }
 
     // rotate left the current grid and push left that will give the up and rotate right again
@@ -199,7 +208,8 @@ class App extends React.Component {
       let wait = await this.rotateLeft()
       let wait1 = await this.left()
       let wait2 = await this.rotateRight()
-      console.log(wait, wait1, wait2);
+      let wait3 = await this.victoire()
+      console.log(wait, wait1, wait2,wait3);
     }
 
     // Function Down
@@ -225,19 +235,79 @@ class App extends React.Component {
       }
     }
 
+   onKeyDown = (e) => {
+      switch (e.key) {
+        case 'ArrowLeft':
+          this.left()
+          break;
+        case 'ArrowRight':
+          this.right()
+          break;
+        case 'ArrowUp':
+          this.up()
+          break;
+        case 'ArrowDown':
+          this.down()
+          break;
+      
+        default:
+          break;
+      }
+      
+      console.log(e.key)
+  }
 
+  down = async () =>{
+    let wait = await this.rotateLeft()
+    let wait1 = await this.right()
+    let wait2 = await this.rotateRight()
+    let wait3 = await this.victoire()
+    console.log(wait, wait1, wait2,wait3);
+  }
+
+  // victoire
+
+  victoire = () =>{
+    let result=0
+    this.state.grid.forEach((row)=>{
+      row.forEach((element)=>{
+        if (element === 2048){
+          result++
+        }
+        if (result > 0 && !this.state.victory){
+          this.setState({
+            etat: 'Victoire'
+          })
+        }
+      })
+    })
+  }
+
+  // continue
+
+  continue = () =>{
+    this.setState({
+      etat: '',
+      victory: true
+    })
+  }
+  
     render(){
+
+      
     return (
       <>
-        <section>
-          <button onClick={this.left}>Left</button>
-          <button onClick={this.right}>right</button>
-          <button onClick={this.up}>up</button>
-          <button onClick={this.down}>Down</button>
+        {this.state.etat==='' && 
+        <section onKeyDown={this.onKeyDown}>
           <button onClick={this.start}>start</button>
           <p>Score : {this.state.score}</p>
           <Grid grid={this.state.grid}/>
-        </section>
+        </section>}
+        {this.state.etat==='Victoire' && <section>
+          <h2>Victoire</h2>
+          <button onClick={this.start}>restart</button>
+          <button onClick={this.continue}>Continuer</button>
+        </section>}
       </>
     );
   }
