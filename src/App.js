@@ -302,7 +302,7 @@ class App extends React.Component {
     return (
       <>
         {this.state.etat==='' &&
-        <section onKeyDown={this.onKeyDown}>
+        <section className="right" onKeyDown={this.onKeyDown}>
           <button onClick={this.start}>start</button>
           <p className="white">Score : {this.state.score}</p>
           <Grid grid={this.state.grid}/>
