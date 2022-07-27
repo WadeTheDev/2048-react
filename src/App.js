@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import './App.css';
 import Grid from "./components/Grid";
-
 let init = 0
 
 
@@ -20,7 +19,7 @@ class App extends React.Component {
       etat: '',
       victory: false
     }
-  
+
   }
 
   // Function reset grid
@@ -264,7 +263,7 @@ class App extends React.Component {
     let rowTest=0
     this.state.grid.forEach((row)=>{
       row.forEach((element)=>{
-        if (element === 2048){
+        if (element === 16){
           result++
         }
         if (element===""){
@@ -302,7 +301,7 @@ class App extends React.Component {
 
     return (
       <>
-        {this.state.etat==='' && 
+        {this.state.etat==='' &&
         <section onKeyDown={this.onKeyDown}>
           <button onClick={this.start}>start</button>
           <p>Score : {this.state.score}</p>
