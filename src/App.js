@@ -85,9 +85,9 @@ class App extends React.Component {
           }
         })
       })
-      
+
         this.setState({
-              grid : gridVide,
+          grid : gridVide,
       })
     }
 
@@ -130,13 +130,13 @@ class App extends React.Component {
     // Function left
     left = async () =>{
       let wait = await this.compressGridLeft()
-        let wait1 = await this.mergeSameNumbersRow()
-      if(this.state.possible){
+      let wait1 = await this.mergeSameNumbersRow()
+      // if(this.state.possible){
         wait = await this.compressGridLeft()
         let wait3 = await this.victoire()
         this.addNumberRandom()
         console.log(wait, wait1,wait3);
-      }
+      // }
       this.setState({
         possible:true
       })
@@ -171,8 +171,8 @@ class App extends React.Component {
     right = async () =>{
       let wait = await this.compressGridRight()
       let wait1 = await this.mergeSameNumbersRow()
+      wait = await this.compressGridRight()
       // if (this.state.possible){
-        wait = await this.compressGridRight()
       let wait3 = await this.victoire()
       this.addNumberRandom()
       console.log(wait, wait1,wait3);
@@ -248,7 +248,7 @@ class App extends React.Component {
       let random = Math.floor(Math.random()* 2)
       let randomRow = Math.floor(Math.random()* 4)
       let randomColumn = Math.floor(Math.random()* 4)
-      let gridClone = [...this.state.grid]
+      const gridClone = [...this.state.grid]
       if (gridClone[randomRow][randomColumn] === "") {
       gridClone[randomRow][randomColumn] =  array[random]
       this.setState({grid: gridClone})
@@ -319,7 +319,6 @@ class App extends React.Component {
   }
 
     render(){
-
 
     return (
       <>
