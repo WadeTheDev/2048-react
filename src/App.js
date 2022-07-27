@@ -269,12 +269,10 @@ class App extends React.Component {
             etat: 'Victoire'
           })
         }
-        
       })
       if (vide===0){
         rowTest++
       }
-      
     }
     )
     if (rowTest === 4 ){
