@@ -12,7 +12,7 @@ class Grid extends React.Component {
             {row.map((item, j) => {
               return(
               <div key={j} className="item">
-                <p>{item}</p>
+                <p className="number">{item}</p>
               </div>)
             })}
           </div>)
