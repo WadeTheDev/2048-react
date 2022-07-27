@@ -40,7 +40,7 @@ class App extends React.Component {
 
   // Function create random space
   randomNumber = () => {
-    let array = [2,4]
+    let array = [1024,1024]
     let random = Math.floor(Math.random()* 2)
     let randomRow = Math.floor(Math.random()* 4)
     let randomColumn = Math.floor(Math.random()* 4)
@@ -324,18 +324,30 @@ class App extends React.Component {
       <>
         {this.state.etat==='' &&
         <section onKeyDown={this.onKeyDown}>
-          <button onClick={this.start}>start</button>
+          <div className="separate"></div>
+          <div className="left">
+          <div className="circle"></div>
+          <h1><span>2048</span></h1>
           <p className="white">Score : {this.state.score}</p>
+          <button onClick={this.start}>START</button>
+          </div>
+          <div className="right">
           <Grid grid={this.state.grid}/>
+          </div>
         </section>}
-        {this.state.etat==='Victoire' && <section>
-          <h2>Victoire</h2>
+        {this.state.etat==='Victoire' && <section className="victory">
+          <h2>Mouais, Peut mieux Faire...</h2>
+          <p className="white">Score : {this.state.score}</p>
+          <div>
           <button onClick={this.start}>restart</button>
           <button onClick={this.continue}>Continuer</button>
+          </div>
         </section>}
-         {this.state.etat==='Defaite' && <section>
-          <h2>Tu sais pas jouer Jack, t'es mauvais</h2>
-          <button onClick={this.start}>Fait mieux!</button>
+         {this.state.etat==='Defaite' && <section className="defaite">
+          <h2>Tu sais pas jouer Jack, t'es mauvais !</h2>
+          <p className="white">Score : {this.state.score}</p>
+          <button onClick={this.start}>FAIT MIEUX !</button>
+          <div className="light"></div>
           </section>}
       </>
     );
