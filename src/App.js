@@ -39,7 +39,7 @@ class App extends React.Component {
 
   // Function create random space
   randomNumber = () => {
-    let array = [1024,1024]
+    let array = [2,4]
     let random = Math.floor(Math.random()* 2)
     let randomRow = Math.floor(Math.random()* 4)
     let randomColumn = Math.floor(Math.random()* 4)
@@ -119,8 +119,8 @@ class App extends React.Component {
       let wait = await this.compressGridLeft()
       let wait1 = await this.mergeSameNumbersRow()
       wait = await this.compressGridLeft()
-      this.addNumberRandom()
       let wait3 = await this.victoire()
+      this.addNumberRandom()
       console.log(wait, wait1,wait3);
     }
 
@@ -154,8 +154,8 @@ class App extends React.Component {
       let wait = await this.compressGridRight()
       let wait1 = await this.mergeSameNumbersRow()
       wait = await this.compressGridRight()
-      this.addNumberRandom()
       let wait3 = await this.victoire()
+      this.addNumberRandom()
       console.log(wait, wait1,wait3);
     }
 
@@ -208,8 +208,7 @@ class App extends React.Component {
       let wait = await this.rotateLeft()
       let wait1 = await this.left()
       let wait2 = await this.rotateRight()
-      let wait3 = await this.victoire()
-      console.log(wait, wait1, wait2,wait3);
+      console.log(wait, wait1, wait2);
     }
 
     // Function Down
@@ -217,8 +216,7 @@ class App extends React.Component {
       let wait = await this.rotateLeft()
       let wait1 = await this.right()
       let wait2 = await this.rotateRight()
-      let wait3 = await this.victoire()
-      console.log(wait, wait1, wait2,wait3);
+      console.log(wait, wait1, wait2);
     }
 
     // Add random number
@@ -262,18 +260,34 @@ class App extends React.Component {
 
   victoire = () =>{
     let result=0
+    let vide=0
+    let rowTest=0
     this.state.grid.forEach((row)=>{
       row.forEach((element)=>{
         if (element === 2048){
           result++
+        }
+        if (element===""){
+          vide++
         }
         if (result > 0 && !this.state.victory){
           this.setState({
             etat: 'Victoire'
           })
         }
+        
       })
-    })
+      if (vide===0){
+        rowTest++
+      }
+      
+    }
+    )
+    if (rowTest === 4 ){
+      this.setState({
+        etat: 'Defaite'
+      })
+    }
   }
 
   // continue
@@ -301,6 +315,10 @@ class App extends React.Component {
           <button onClick={this.start}>restart</button>
           <button onClick={this.continue}>Continuer</button>
         </section>}
+         {this.state.etat==='Defaite' && <section>
+          <h2>T'es mauvais Jack</h2>
+          <button onClick={this.start}>Fait mieux!</button>
+          </section>}
       </>
     );
   }
