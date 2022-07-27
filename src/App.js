@@ -39,7 +39,7 @@ class App extends React.Component {
 
   // Function create random space
   randomNumber = () => {
-    let array = [2,4]
+    let array = [1024,1024]
     let random = Math.floor(Math.random()* 2)
     let randomRow = Math.floor(Math.random()* 4)
     let randomColumn = Math.floor(Math.random()* 4)
@@ -217,7 +217,8 @@ class App extends React.Component {
       let wait = await this.rotateLeft()
       let wait1 = await this.right()
       let wait2 = await this.rotateRight()
-      console.log(wait, wait1, wait2);
+      let wait3 = await this.victoire()
+      console.log(wait, wait1, wait2,wait3);
     }
 
     // Add random number
@@ -255,14 +256,6 @@ class App extends React.Component {
       }
       
       console.log(e.key)
-  }
-
-  down = async () =>{
-    let wait = await this.rotateLeft()
-    let wait1 = await this.right()
-    let wait2 = await this.rotateRight()
-    let wait3 = await this.victoire()
-    console.log(wait, wait1, wait2,wait3);
   }
 
   // victoire
