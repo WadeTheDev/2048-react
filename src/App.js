@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './App.css';
 import Grid from "./components/Grid";
 
 let init = 0
+
+
 class App extends React.Component {
   constructor(){
     super()
@@ -18,8 +20,10 @@ class App extends React.Component {
       etat: '',
       victory: false
     }
+  
   }
 
+  // Function reset grid
   reset = () => {
     this.setState({score : 0,
       grid: [
@@ -33,6 +37,7 @@ class App extends React.Component {
   })
   }
 
+  // Function create random space
   randomNumber = () => {
     let array = [2,4]
     let random = Math.floor(Math.random()* 2)
@@ -53,14 +58,14 @@ class App extends React.Component {
       )
     }
 
+    // Function start
     start = async () => {
       const waitReset = await this.reset()
       this.randomNumber()
       console.log(waitReset)
     }
 
-    // left
-
+    // Compress grid left
     compressGridLeft = () => {
       const gridVide = [
         ["","","",""],
@@ -68,13 +73,13 @@ class App extends React.Component {
         ["","","",""],
         ["","","",""]
       ]
+      const gridState = this.state.grid
 
-      this.state.grid.map((row, i) => {
+      gridState.map((row, i) => {
         let colNum = 0
-
         row.map((item, j) => {
-          if(this.state.grid[i][j] !== ""){
-            gridVide[i][colNum] = this.state.grid[i][j];
+          if(gridState[i][j] !== ""){
+            gridVide[i][colNum] = gridState[i][j];
             colNum++
           }
         })
@@ -85,6 +90,7 @@ class App extends React.Component {
       })
     }
 
+    // Function merge same numbers
     mergeSameNumbersRow = () => {
       const gridClone = [...this.state.grid]
 
@@ -103,6 +109,7 @@ class App extends React.Component {
       })
     }
 
+    // Function left
     left = async () =>{
       let wait = await this.compressGridLeft()
       let wait1 = await this.mergeSameNumbersRow()
@@ -112,8 +119,7 @@ class App extends React.Component {
       console.log(wait, wait1,wait3);
     }
 
-    // right
-
+    // Compress grid right
     compressGridRight = () => {
       const gridVide = [
         ["","","",""],
@@ -121,13 +127,13 @@ class App extends React.Component {
         ["","","",""],
         ["","","",""]
       ]
+      const gridState = this.state.grid
 
-      this.state.grid.map((row, i) => {
+      gridState.map((row, i) => {
         let colNum = 3
-
         row.map((item, j) => {
-          if(this.state.grid[i][j] !== ""){
-            gridVide[i][colNum] = this.state.grid[i][j];
+          if(gridState[i][j] !== ""){
+            gridVide[i][colNum] = gridState[i][j];
             colNum--
           }
         })
@@ -138,6 +144,7 @@ class App extends React.Component {
       })
     }
 
+    // Function right
     right = async () =>{
       let wait = await this.compressGridRight()
       let wait1 = await this.mergeSameNumbersRow()
@@ -147,9 +154,9 @@ class App extends React.Component {
       console.log(wait, wait1,wait3);
     }
 
-    // up
     // rotate left the current grid and push left that will give the up and rotate right again
 
+    // Grid rotate left
     rotateLeft = () =>{
       const gridVide = [
         ["","","",""],
@@ -157,10 +164,11 @@ class App extends React.Component {
         ["","","",""],
         ["","","",""]
       ]
+      const gridState = this.state.grid
 
-      this.state.grid.map((row, i) => {
+      gridState.map((row, i) => {
         row.map((item, j) => {
-          gridVide[i][j] = this.state.grid[j][this.state.grid[i].length - 1 - i]
+          gridVide[i][j] = gridState[j][gridState[i].length - 1 - i]
         })
       })
 
@@ -169,7 +177,7 @@ class App extends React.Component {
       })
     }
 
-
+    // Grid rotate right
     rotateRight = () => {
       const gridVide = [
         ["","","",""],
@@ -177,10 +185,11 @@ class App extends React.Component {
         ["","","",""],
         ["","","",""]
       ]
+      const gridState = this.state.grid
 
-      this.state.grid.map((row, i) => {
+      gridState.map((row, i) => {
         row.map((item, j) => {
-          gridVide[i][j] = this.state.grid[this.state.grid[i].length - 1 - j][i]
+          gridVide[i][j] = gridState[gridState[i].length - 1 - j][i]
         })
       })
 
@@ -189,7 +198,7 @@ class App extends React.Component {
       })
     }
 
- 
+    // function up
     up = async () =>{
       let wait = await this.rotateLeft()
       let wait1 = await this.left()
@@ -198,9 +207,15 @@ class App extends React.Component {
       console.log(wait, wait1, wait2,wait3);
     }
 
-    // up done
-    // dushen le Giga-bg
+    // Function Down
+    down = async () =>{
+      let wait = await this.rotateLeft()
+      let wait1 = await this.right()
+      let wait2 = await this.rotateRight()
+      console.log(wait, wait1, wait2);
+    }
 
+    // Add random number
     addNumberRandom = () =>{
       let array = [2,4]
       let random = Math.floor(Math.random()* 2)
@@ -215,51 +230,70 @@ class App extends React.Component {
       }
     }
 
-    // Down
+   onKeyDown = (e) => {
+      switch (e.key) {
+        case 'ArrowLeft':
+          this.left()
+          break;
+        case 'ArrowRight':
+          this.right()
+          break;
+        case 'ArrowUp':
+          this.up()
+          break;
+        case 'ArrowDown':
+          this.down()
+          break;
+      
+        default:
+          break;
+      }
+      
+      console.log(e.key)
+  }
 
-    down = async () =>{
-      let wait = await this.rotateLeft()
-      let wait1 = await this.right()
-      let wait2 = await this.rotateRight()
-      let wait3 = await this.victoire()
-      console.log(wait, wait1, wait2,wait3);
-    }
+  down = async () =>{
+    let wait = await this.rotateLeft()
+    let wait1 = await this.right()
+    let wait2 = await this.rotateRight()
+    let wait3 = await this.victoire()
+    console.log(wait, wait1, wait2,wait3);
+  }
 
-    // victoire
+  // victoire
 
-    victoire = () =>{
-      let result=0
-      this.state.grid.forEach((row)=>{
-        row.forEach((element)=>{
-          if (element === 2048){
-            result++
-          }
-          if (result > 0 && !this.state.victory){
-            this.setState({
-              etat: 'Victoire'
-            })
-          }
-        })
+  victoire = () =>{
+    let result=0
+    this.state.grid.forEach((row)=>{
+      row.forEach((element)=>{
+        if (element === 2048){
+          result++
+        }
+        if (result > 0 && !this.state.victory){
+          this.setState({
+            etat: 'Victoire'
+          })
+        }
       })
-    }
+    })
+  }
 
-    // continue
+  // continue
 
-    continue = () =>{
-      this.setState({
-        etat: '',
-        victory: true
-      })
-    }
-
+  continue = () =>{
+    this.setState({
+      etat: '',
+      victory: true
+    })
+  }
+  
     render(){
+
+      
     return (
       <>
-        {this.state.etat==='' && <section>
-          <button onClick={this.left}>Left</button>
-          <button onClick={this.right}>right</button>
-          <button onClick={this.up}>up</button>
-          <button onClick={this.down}>Down</button>
+        {this.state.etat==='' && 
+        <section onKeyDown={this.onKeyDown}>
           <button onClick={this.start}>start</button>
           <Grid grid={this.state.grid}/>
         </section>}
