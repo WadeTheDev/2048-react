@@ -213,12 +213,7 @@ class App extends React.Component {
     }
 
     // Function Down
-    down = async () =>{
-      let wait = await this.rotateLeft()
-      let wait1 = await this.right()
-      let wait2 = await this.rotateRight()
-      console.log(wait, wait1, wait2);
-    }
+
 
     // Add random number
     addNumberRandom = () =>{
@@ -266,7 +261,6 @@ class App extends React.Component {
   }
 
   // victoire
-
   victoire = () =>{
     let result=0
     this.state.grid.forEach((row)=>{
@@ -284,7 +278,6 @@ class App extends React.Component {
   }
 
   // continue
-
   continue = () =>{
     this.setState({
       etat: '',
@@ -292,12 +285,12 @@ class App extends React.Component {
     })
   }
 
-    render(){
+  render(){
 
 
     return (
       <>
-        {this.state.etat==='' && 
+        {this.state.etat==='' &&
         <section onKeyDown={this.onKeyDown}>
           <button onClick={this.start}>start</button>
           <p>Score : {this.state.score}</p>
