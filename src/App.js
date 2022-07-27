@@ -263,7 +263,7 @@ class App extends React.Component {
     let rowTest=0
     this.state.grid.forEach((row)=>{
       row.forEach((element)=>{
-        if (element === 16){
+        if (element === 2048){
           result++
         }
         if (element===""){
