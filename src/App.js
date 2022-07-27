@@ -17,9 +17,12 @@ class App extends React.Component {
         ["","","",""],
         ["","","",""]
       ],
-      possible: true,
+      possible: false,
       etat: '',
-      victory: false
+      victory: false,
+      Move: "",
+      direction:"",
+      fin: false
     }
 
   }
@@ -88,6 +91,7 @@ class App extends React.Component {
       
         this.setState({
               grid : gridVide,
+              Move: "oui"
       })
     }
 
@@ -104,7 +108,9 @@ class App extends React.Component {
             gridClone[i][j+1] = ""
 
             this.setState({
-              score : scoreState + gridClone[i][j]
+              score : scoreState + gridClone[i][j],
+              direction: "",
+              fin:true
             })
           }
         })
@@ -122,24 +128,52 @@ class App extends React.Component {
 
         this.setState({
           grid: gridClone,
-          possible: test
+          possible: test,
+          Move:""
         })
+        
+
+        if (this.state.direction!==""){
+          this.setState({
+            direction:"oui",
+
+          })
+        }
 
     }
 
     // Function left
-    left = async () =>{
-      let wait = await this.compressGridLeft()
-        let wait1 = await this.mergeSameNumbersRow()
-      if(this.state.possible){
-        wait = await this.compressGridLeft()
-        let wait3 = await this.victoire()
-        this.addNumberRandom()
-        console.log(wait, wait1,wait3);
+    left =  () =>{
+      this.compressGridLeft()
+    }
+
+    // Update
+
+    componentDidUpdate(prevProps, prevState){
+      if (this.state.Move === "oui"){
+        this.mergeSameNumbersRow()
       }
-      this.setState({
-        possible:true
-      })
+
+      if(this.state.possible){
+        this.addNumberRandom()
+      }
+
+      if (this.state.direction==='Up'){
+        this.left()
+      }
+
+      if (this.state.direction==='Down'){
+        this.right()
+      }
+
+      if (this.state.direction==='oui'){
+        this.rotateRight()
+      }
+
+      if (this.state.fin){
+        this.victoire()
+      }
+
     }
 
     // Compress grid right
@@ -163,29 +197,20 @@ class App extends React.Component {
       })
 
       this.setState({
-        grid : gridVide
+        grid : gridVide,
+        Move: "oui"
       })
     }
 
     // Function right
-    right = async () =>{
-      let wait = await this.compressGridRight()
-      let wait1 = await this.mergeSameNumbersRow()
-      // if (this.state.possible){
-        wait = await this.compressGridRight()
-      let wait3 = await this.victoire()
-      this.addNumberRandom()
-      console.log(wait, wait1,wait3);
-      // }
-      // this.setState({
-      //   possible:true
-      // })
+    right =  () =>{
+      this.compressGridRight()
     }
 
     // rotate left the current grid and push left that will give the up and rotate right again
 
     // Grid rotate left
-    rotateLeft = () =>{
+    rotateLeft = (direction) =>{
       const gridVide = [
         ["","","",""],
         ["","","",""],
@@ -200,9 +225,17 @@ class App extends React.Component {
         })
       })
 
-      this.setState({
-        grid: gridVide
-      })
+      if (direction==='Up'){
+        this.setState({
+          grid: gridVide,
+          direction: 'Up'
+        })
+      }else if (direction==='Down'){
+        this.setState({
+          grid: gridVide,
+          direction: 'Down'
+        })
+      }
     }
 
     // Grid rotate right
@@ -222,24 +255,19 @@ class App extends React.Component {
       })
 
       this.setState({
-        grid: gridVide
+        grid: gridVide,
+        direction:"" 
       })
     }
 
     // function up
-    up = async () =>{
-      let wait = await this.rotateLeft()
-      let wait1 = await this.left()
-      let wait2 = await this.rotateRight()
-      console.log(wait, wait1, wait2);
+    up = (up) =>{
+      this.rotateLeft(up)
     }
 
     // Function Down
-    down = async () =>{
-      let wait = await this.rotateLeft()
-      let wait1 = await this.right()
-      let wait2 = await this.rotateRight()
-      console.log(wait, wait1, wait2);
+    down = (down) =>{
+      this.rotateLeft(down)
     }
 
     // Add random number
@@ -251,7 +279,10 @@ class App extends React.Component {
       let gridClone = [...this.state.grid]
       if (gridClone[randomRow][randomColumn] === "") {
       gridClone[randomRow][randomColumn] =  array[random]
-      this.setState({grid: gridClone})
+      this.setState({
+        grid: gridClone,
+        possible:false
+        })
       }else{
         this.addNumberRandom()
       }
@@ -266,10 +297,10 @@ class App extends React.Component {
           this.right()
           break;
         case 'ArrowUp':
-          this.up()
+          this.up('Up')
           break;
         case 'ArrowDown':
-          this.down()
+          this.down('Down')
           break;
 
         default:
@@ -293,7 +324,8 @@ class App extends React.Component {
         }
         if (result > 0 && !this.state.victory){
           this.setState({
-            etat: 'Victoire'
+            etat: 'Victoire',
+            fin:false
           })
         }
       })
