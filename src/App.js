@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import './App.css';
 import Grid from "./components/Grid";
 let init = 0
+let test = false
 
 
 class App extends React.Component {
@@ -16,6 +17,7 @@ class App extends React.Component {
         ["","","",""],
         ["","","",""]
       ],
+      possible: true,
       etat: '',
       victory: false
     }
@@ -72,7 +74,7 @@ class App extends React.Component {
         ["","","",""],
         ["","","",""]
       ]
-      const gridState = this.state.grid
+      const gridState = [...this.state.grid]
 
       gridState.map((row, i) => {
         let colNum = 0
@@ -83,9 +85,9 @@ class App extends React.Component {
           }
         })
       })
-
-      this.setState({
-        grid : gridVide
+      
+        this.setState({
+              grid : gridVide,
       })
     }
 
@@ -108,19 +110,36 @@ class App extends React.Component {
         })
       })
 
-      this.setState({
-        grid: gridClone
+      test=false
+
+      gridClone.forEach((row,i)=>{
+        row.forEach((element,j)=>{
+          if (this.state.grid[i][j] !== element){
+            test=true
+          }
+        })
       })
+
+        this.setState({
+          grid: gridClone,
+          possible: test
+        })
+
     }
 
     // Function left
     left = async () =>{
       let wait = await this.compressGridLeft()
-      let wait1 = await this.mergeSameNumbersRow()
-      wait = await this.compressGridLeft()
-      let wait3 = await this.victoire()
-      this.addNumberRandom()
-      console.log(wait, wait1,wait3);
+        let wait1 = await this.mergeSameNumbersRow()
+      if(this.state.possible){
+        wait = await this.compressGridLeft()
+        let wait3 = await this.victoire()
+        this.addNumberRandom()
+        console.log(wait, wait1,wait3);
+      }
+      this.setState({
+        possible:true
+      })
     }
 
     // Compress grid right
@@ -152,10 +171,15 @@ class App extends React.Component {
     right = async () =>{
       let wait = await this.compressGridRight()
       let wait1 = await this.mergeSameNumbersRow()
-      wait = await this.compressGridRight()
+      // if (this.state.possible){
+        wait = await this.compressGridRight()
       let wait3 = await this.victoire()
       this.addNumberRandom()
       console.log(wait, wait1,wait3);
+      // }
+      // this.setState({
+      //   possible:true
+      // })
     }
 
     // rotate left the current grid and push left that will give the up and rotate right again
@@ -251,8 +275,6 @@ class App extends React.Component {
         default:
           break;
       }
-
-      console.log(e.key)
   }
 
   // victoire
