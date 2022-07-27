@@ -9,24 +9,28 @@ class App extends React.Component {
 
     this.state = {
       score : 0,
-      gameOver : false,
-      message : '',
       grid: [
-        ["","1024","","1024"],
+        ["","","",""],
         ["","","",""],
         ["","","",""],
         ["","","",""]
       ],
+      etat: '',
+      victory: false
     }
   }
 
   reset = () => {
-    this.setState({grid: [
-      ["","","",""],
-      ["","","",""],
-      ["","","",""],
-      ["","","",""]
-    ]})
+    this.setState({score : 0,
+      grid: [
+        ["","","",""],
+        ["","","",""],
+        ["","","",""],
+        ["","","",""]
+      ],
+      etat: '',
+      victory: false
+  })
   }
 
   randomNumber = () => {
@@ -104,7 +108,8 @@ class App extends React.Component {
       let wait1 = await this.mergeSameNumbersRow()
       wait = await this.compressGridLeft()
       this.addNumberRandom()
-      console.log(wait, wait1);
+      let wait3 = await this.victoire()
+      console.log(wait, wait1,wait3);
     }
 
     // right
@@ -138,7 +143,8 @@ class App extends React.Component {
       let wait1 = await this.mergeSameNumbersRow()
       wait = await this.compressGridRight()
       this.addNumberRandom()
-      console.log(wait, wait1);
+      let wait3 = await this.victoire()
+      console.log(wait, wait1,wait3);
     }
 
     // up
@@ -188,7 +194,8 @@ class App extends React.Component {
       let wait = await this.rotateLeft()
       let wait1 = await this.left()
       let wait2 = await this.rotateRight()
-      console.log(wait, wait1, wait2);
+      let wait3 = await this.victoire()
+      console.log(wait, wait1, wait2,wait3);
     }
 
     // up done
@@ -214,20 +221,53 @@ class App extends React.Component {
       let wait = await this.rotateLeft()
       let wait1 = await this.right()
       let wait2 = await this.rotateRight()
-      console.log(wait, wait1, wait2);
+      let wait3 = await this.victoire()
+      console.log(wait, wait1, wait2,wait3);
+    }
+
+    // victoire
+
+    victoire = () =>{
+      let result=0
+      this.state.grid.forEach((row)=>{
+        row.forEach((element)=>{
+          if (element === 2048){
+            result++
+          }
+          if (result > 0 && !this.state.victory){
+            this.setState({
+              etat: 'Victoire'
+            })
+          }
+        })
+      })
+    }
+
+    // continue
+
+    continue = () =>{
+      this.setState({
+        etat: '',
+        victory: true
+      })
     }
 
     render(){
     return (
       <>
-        <section>
+        {this.state.etat==='' && <section>
           <button onClick={this.left}>Left</button>
           <button onClick={this.right}>right</button>
           <button onClick={this.up}>up</button>
           <button onClick={this.down}>Down</button>
           <button onClick={this.start}>start</button>
           <Grid grid={this.state.grid}/>
-        </section>
+        </section>}
+        {this.state.etat==='Victoire' && <section>
+          <h2>Victoire</h2>
+          <button onClick={this.start}>restart</button>
+          <button onClick={this.continue}>Continuer</button>
+        </section>}
       </>
     );
   }
