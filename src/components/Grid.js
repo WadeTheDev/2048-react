@@ -5,13 +5,13 @@ class Grid extends React.Component {
   render(){
 
     return (
-    <div className="big-container border">
+    <div className="big-container">
         {this.props.grid.map((row,i) => {
           return(
           <div key={i} className="lil-container flex">
             {row.map((item, j) => {
               return(
-              <div key={j} className="item border">
+              <div key={j} className="item">
                 <p>{item}</p>
               </div>)
             })}
