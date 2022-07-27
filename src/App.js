@@ -83,9 +83,10 @@ class App extends React.Component {
       })
     }
 
-    // Function merge same numbers
+    // Function merge same numbers and add the score
     mergeSameNumbersRow = () => {
       const gridClone = [...this.state.grid]
+      const scoreState = this.state.score
 
       gridClone.map((row, i) => {
         row.slice(0, row.length-1).map((item, j) => {
@@ -93,6 +94,10 @@ class App extends React.Component {
           gridClone[i][j] === gridClone[i][j+1]){
             gridClone[i][j] = gridClone[i][j]*2
             gridClone[i][j+1] = ""
+
+            this.setState({
+              score : scoreState + gridClone[i][j]
+            })
           }
         })
       })
@@ -230,6 +235,7 @@ class App extends React.Component {
           <button onClick={this.up}>up</button>
           <button onClick={this.down}>Down</button>
           <button onClick={this.start}>start</button>
+          <p>Score : {this.state.score}</p>
           <Grid grid={this.state.grid}/>
         </section>
       </>
