@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import './App.css';
 import Grid from "./components/Grid";
 let init = 0
@@ -35,7 +35,7 @@ class App extends React.Component {
       ],
       etat: '',
       victory: false
-  })
+    })
   }
 
   // Function create random space
@@ -76,18 +76,18 @@ class App extends React.Component {
       ]
       const gridState = [...this.state.grid]
 
-      gridState.map((row, i) => {
+      gridState.forEach((row, i) => {
         let colNum = 0
-        row.map((item, j) => {
+        row.forEach((item, j) => {
           if(gridState[i][j] !== ""){
             gridVide[i][colNum] = gridState[i][j];
             colNum++
           }
         })
       })
-      
-        this.setState({
-              grid : gridVide,
+
+      this.setState({
+        grid : gridVide,
       })
     }
 
@@ -96,8 +96,8 @@ class App extends React.Component {
       const gridClone = [...this.state.grid]
       const scoreState = this.state.score
 
-      gridClone.map((row, i) => {
-        row.slice(0, row.length-1).map((item, j) => {
+      gridClone.forEach((row, i) => {
+        row.slice(0, row.length-1).forEach((item, j) => {
           if(gridClone[i][j] !== "" &&
           gridClone[i][j] === gridClone[i][j+1]){
             gridClone[i][j] = gridClone[i][j]*2
@@ -120,23 +120,23 @@ class App extends React.Component {
         })
       })
 
-        this.setState({
-          grid: gridClone,
-          possible: test
-        })
+      this.setState({
+        grid: gridClone,
+        possible: test
+      })
 
     }
 
     // Function left
     left = async () =>{
       let wait = await this.compressGridLeft()
-        let wait1 = await this.mergeSameNumbersRow()
-      if(this.state.possible){
+      let wait1 = await this.mergeSameNumbersRow()
+      // if(this.state.possible){
         wait = await this.compressGridLeft()
         let wait3 = await this.victoire()
         this.addNumberRandom()
         console.log(wait, wait1,wait3);
-      }
+      // }
       this.setState({
         possible:true
       })
@@ -152,9 +152,9 @@ class App extends React.Component {
       ]
       const gridState = this.state.grid
 
-      gridState.map((row, i) => {
+      gridState.forEach((row, i) => {
         let colNum = 3
-        row.map((item, j) => {
+        row.forEach((item, j) => {
           if(gridState[i][j] !== ""){
             gridVide[i][colNum] = gridState[i][j];
             colNum--
@@ -171,8 +171,8 @@ class App extends React.Component {
     right = async () =>{
       let wait = await this.compressGridRight()
       let wait1 = await this.mergeSameNumbersRow()
+      wait = await this.compressGridRight()
       // if (this.state.possible){
-        wait = await this.compressGridRight()
       let wait3 = await this.victoire()
       this.addNumberRandom()
       console.log(wait, wait1,wait3);
@@ -194,8 +194,8 @@ class App extends React.Component {
       ]
       const gridState = this.state.grid
 
-      gridState.map((row, i) => {
-        row.map((item, j) => {
+      gridState.forEach((row, i) => {
+        row.forEach((item, j) => {
           gridVide[i][j] = gridState[j][gridState[i].length - 1 - i]
         })
       })
@@ -215,8 +215,8 @@ class App extends React.Component {
       ]
       const gridState = this.state.grid
 
-      gridState.map((row, i) => {
-        row.map((item, j) => {
+      gridState.forEach((row, i) => {
+        row.forEach((item, j) => {
           gridVide[i][j] = gridState[gridState[i].length - 1 - j][i]
         })
       })
@@ -248,7 +248,7 @@ class App extends React.Component {
       let random = Math.floor(Math.random()* 2)
       let randomRow = Math.floor(Math.random()* 4)
       let randomColumn = Math.floor(Math.random()* 4)
-      let gridClone = [...this.state.grid]
+      const gridClone = [...this.state.grid]
       if (gridClone[randomRow][randomColumn] === "") {
       gridClone[randomRow][randomColumn] =  array[random]
       this.setState({grid: gridClone})
@@ -319,7 +319,6 @@ class App extends React.Component {
   }
 
     render(){
-
 
     return (
       <>
