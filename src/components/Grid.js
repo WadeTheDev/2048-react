@@ -1,4 +1,5 @@
 import React from "react";
+import "../App.css";
 
 class Grid extends React.Component {
 
@@ -11,7 +12,7 @@ class Grid extends React.Component {
           <div key={i} className="lil-container flex">
             {row.map((item, j) => {
               return(
-              <div key={j} className="item">
+              <div key={j} className={`item cell${item}`}>
                 <p className="number">{item}</p>
               </div>)
             })}

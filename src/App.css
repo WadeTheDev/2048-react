@@ -124,8 +124,8 @@ section{
     font-size: 22px;
     font-weight: bold;
     transition: 0.3s;
-    background: #F0F8FE;
-    box-shadow: inset 1px 0px 50px rgba(183, 241, 255, 0.42);
+    /* background: #F0F8FE; */
+    box-shadow: inset 0px 4px 60px rgba(0, 0, 0, 0.25);
     border: 2px solid #374046;    
 }
 
@@ -212,6 +212,43 @@ section{
     cursor: pointer;
     transition: 0.3s;
 }
+.cell{
+    background: #F0F8FE;
+}
+.cell2{
+    background-color: #CDE4FF;
+}
+  .cell4{
+    background-color: #B6CBE5;
+  }
+  .cell8{
+    background-color: #769bcc;
+  }
+  .cell16{
+    background-color: #95A4B7;
+  }
+  .cell32{
+    background-color: #617895;
+  }
+  .cell64{
+    background-color: #507CB4;
+  }
+  .cell128{
+    background-color: #307BDA;
+  }
+  .cell256{
+    background-color: #4FF0F0;
+  }
+  .cell512{
+    background-color: #068C8C;
+  }
+  .cell1024{
+    background-color: #185656;
+  }
+  .cell2048{
+    background-color: #0A9D83;
+  }
+
 @keyframes move { 
     100%{
         opacity: 1;

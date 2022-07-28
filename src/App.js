@@ -40,7 +40,7 @@ class App extends React.Component {
 
   // Function create random space
   randomNumber = () => {
-    let array = [1024,1024]
+    let array = [2,4]
     let random = Math.floor(Math.random()* 2)
     let randomRow = Math.floor(Math.random()* 4)
     let randomColumn = Math.floor(Math.random()* 4)
